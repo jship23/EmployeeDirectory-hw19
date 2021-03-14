@@ -1,24 +1,23 @@
-import React from "react";
-import './App.css';
+import React, { useState, useEffect } from "react";
+import {BrowserRouter as Router, Route} from "react-router-dom";
+import API from "./utils/API";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  const [empArray, setEmpArray] = useState([]);
+
+  useEffect(()=>{
+    API.search().then((res)=>{
+      setEmpArray(res.data.results);
+    })
+  }, []);
+  console.log(empArray);
+
+    return (
+    <>
+      <Header />
+      <Search searchValue={searchValue} handleInputChange={handleInputChange} handleFormSubmit={handleFormSubmit} />
+      <Table empArray = {empArray} />
+    </>
   );
 }
 
